@@ -27,8 +27,7 @@
     dest: "files/{{ item.src }}"
     mode: "0644"
   delegate_to: localhost
-  when: url in item
-  loop: "{{ fonts_user | default([]) }}"
+  loop: "{{ fonts_user | selectattr('url', 'defined') | default([]) }}"
 
 - name: Install fonts
   include_role:
@@ -39,5 +38,4 @@
     path: "files/{{ item.src }}"
     state: absent
   delegate_to: localhost
-  when: url in item
-  loop: "{{ fonts_user | default([]) }}"
+  loop: "{{ fonts_user | selectattr('url', 'defined') | default([]) }}"
