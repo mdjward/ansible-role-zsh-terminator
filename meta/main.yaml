@@ -1,0 +1,10 @@
+dependencies:
+  - role: andrewrothstein.go_dev
+    vars:
+      go_dev_export_installed_pkg: true
+      go_dev_env_bin: '$GOPATH/bin'
+  - role: viasite-ansible.zsh
+    vars:
+      zsh_custom_after: |
+        source ~/.profile{,.d/*.sh}
+        export PROMPT='$(gbt $?)'

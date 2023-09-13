@@ -1,0 +1,6 @@
+zsh_terminator_package: terminator
+
+zsh_config_files: []
+zsh_config_file_default_mode: "0644"
+
+fonts_user: []

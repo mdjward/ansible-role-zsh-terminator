@@ -1,0 +1,25 @@
+- name: Ensure terminator is installed
+  package:
+    name: "{{ zsh_terminator_package }}"
+    state: present
+  become: true
+  become_user: root
+
+- name: Create directories for config files (if applicable)
+  ansible.builtin.file:
+    path: "{{ item.dest_path | default(item.src_path) | default(item) | dirname }}"
+    state: directory
+    mode: "0755"
+  when: |
+    (item.dest_path | default(item.src_path) | default(item) | dirname) != ""
+  loop: "{{ zsh_config_files | default([]) }}"
+
+- name: Copy config files
+  ansible.builtin.copy:
+    src: "{{ item.src_path | default(item) }}"
+    dest: "{{ item.dest_path | [ansible_user_dir, default(item.src_path | default(item))] | join('/') | realpath }}"
+    mode: "{{ item.mode | default(zsh_config_file_default_mode) }}"
+  loop: "{{ zsh_config_files | default([]) }}"
+
+- name: Install fonts
+  include_role: ontic.fonts
