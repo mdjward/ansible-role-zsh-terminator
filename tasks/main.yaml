@@ -31,7 +31,8 @@
   loop: "{{ fonts_user | default([]) }}"
 
 - name: Install fonts
-  include_role: ontic.fonts
+  include_role:
+    name: ontic.fonts
 
 - name: Cleanup downloaded fonts
   file:
