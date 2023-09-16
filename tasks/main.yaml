@@ -17,7 +17,7 @@
 - name: Copy config files
   copy:
     src: "{{ item.src_path | default(item) }}"
-    dest: "{{ [ansible_user_dir, item.dest_path | default(item.src_path | default(item))] | join('/') | realpath }}"
+    dest: "{{ item.dest_path | default([ansible_user_dir, item.src_path | default(item)] | join('/')) | realpath }}"
     mode: "{{ item.mode | default(zsh_config_file_default_mode) }}"
   loop: "{{ zsh_config_files | default([]) }}"
 
